@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class UpdateMenuItem {
     Scanner scanner = new Scanner(System.in);
+    DisplayCategory displayCategoryObj = new DisplayCategory(); // Create an instance of DisplayCategory
 
     public void UpdateMenu() {
         while (true) {
@@ -63,6 +64,10 @@ public class UpdateMenuItem {
                 }
 
                 System.out.println("Item updated successfully!");
+
+                // Call displayUpdatedCategory method of DisplayCategory class to show updated category
+                displayCategoryObj.displayUpdatedCategory(choice);
+
                 waitForEnter();
                 break; // Exit the loop after updating the item
             }
@@ -74,38 +79,50 @@ public class UpdateMenuItem {
         switch (choice) {
             case 1:
                 System.out.println("Chicken and Platters Menu:");
-                for (int i = 0; i < MenuData.chickenAndPlattersItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.chickenAndPlattersItemNames.get(i) + " - " + MenuData.chickenAndPlattersItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.chickenAndPlattersItemNames.length; i++) {
+                    if (MenuData.chickenAndPlattersItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.chickenAndPlattersItemNames[i] + " - " + MenuData.chickenAndPlattersItemPrices[i] + " INR");
+                    }
                 }
                 break;
             case 2:
                 System.out.println("Breakfast Menu:");
-                for (int i = 0; i < MenuData.breakfastItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.breakfastItemNames.get(i) + " - " + MenuData.breakfastItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.breakfastItemNames.length; i++) {
+                    if (MenuData.breakfastItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.breakfastItemNames[i] + " - " + MenuData.breakfastItemPrices[i] + " INR");
+                    }
                 }
                 break;
             case 3:
                 System.out.println("Burger Menu:");
-                for (int i = 0; i < MenuData.burgerItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.burgerItemNames.get(i) + " - " + MenuData.burgerItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.burgerItemNames.length; i++) {
+                    if (MenuData.burgerItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.burgerItemNames[i] + " - " + MenuData.burgerItemPrices[i] + " INR");
+                    }
                 }
                 break;
             case 4:
                 System.out.println("Drinks and Desserts Menu:");
-                for (int i = 0; i < MenuData.drinksAndDessertsItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.drinksAndDessertsItemNames.get(i) + " - " + MenuData.drinksAndDessertsItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.drinksAndDessertsItemNames.length; i++) {
+                    if (MenuData.drinksAndDessertsItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.drinksAndDessertsItemNames[i] + " - " + MenuData.drinksAndDessertsItemPrices[i] + " INR");
+                    }
                 }
                 break;
             case 5:
                 System.out.println("Coffee Menu:");
-                for (int i = 0; i < MenuData.coffeeItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.coffeeItemNames.get(i) + " - " + MenuData.coffeeItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.coffeeItemNames.length; i++) {
+                    if (MenuData.coffeeItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.coffeeItemNames[i] + " - " + MenuData.coffeeItemPrices[i] + " INR");
+                    }
                 }
                 break;
             case 6:
                 System.out.println("Fries Menu:");
-                for (int i = 0; i < MenuData.friesItemNames.size(); i++) {
-                    System.out.println(i + 1 + ". " + MenuData.friesItemNames.get(i) + " - " + MenuData.friesItemPrices.get(i) + " INR");
+                for (int i = 0; i < MenuData.friesItemNames.length; i++) {
+                    if (MenuData.friesItemNames[i] != null) {
+                        System.out.println(i + 1 + ". " + MenuData.friesItemNames[i] + " - " + MenuData.friesItemPrices[i] + " INR");
+                    }
                 }
                 break;
             default:
@@ -116,12 +133,12 @@ public class UpdateMenuItem {
     // Get the number of items in the selected category
     private int getCategorySize(int choice) {
         switch (choice) {
-            case 1: return MenuData.chickenAndPlattersItemNames.size();
-            case 2: return MenuData.breakfastItemNames.size();
-            case 3: return MenuData.burgerItemNames.size();
-            case 4: return MenuData.drinksAndDessertsItemNames.size();
-            case 5: return MenuData.coffeeItemNames.size();
-            case 6: return MenuData.friesItemNames.size();
+            case 1: return MenuData.chickenAndPlattersItemNames.length;
+            case 2: return MenuData.breakfastItemNames.length;
+            case 3: return MenuData.burgerItemNames.length;
+            case 4: return MenuData.drinksAndDessertsItemNames.length;
+            case 5: return MenuData.coffeeItemNames.length;
+            case 6: return MenuData.friesItemNames.length;
             default: return 0;
         }
     }
@@ -130,22 +147,22 @@ public class UpdateMenuItem {
     private void updateItemName(int choice, int index, String newName) {
         switch (choice) {
             case 1:
-                MenuData.chickenAndPlattersItemNames.set(index, newName);
+                MenuData.chickenAndPlattersItemNames[index] = newName;
                 break;
             case 2:
-                MenuData.breakfastItemNames.set(index, newName);
+                MenuData.breakfastItemNames[index] = newName;
                 break;
             case 3:
-                MenuData.burgerItemNames.set(index, newName);
+                MenuData.burgerItemNames[index] = newName;
                 break;
             case 4:
-                MenuData.drinksAndDessertsItemNames.set(index, newName);
+                MenuData.drinksAndDessertsItemNames[index] = newName;
                 break;
             case 5:
-                MenuData.coffeeItemNames.set(index, newName);
+                MenuData.coffeeItemNames[index] = newName;
                 break;
             case 6:
-                MenuData.friesItemNames.set(index, newName);
+                MenuData.friesItemNames[index] = newName;
                 break;
         }
     }
@@ -154,22 +171,22 @@ public class UpdateMenuItem {
     private void updateItemPrice(int choice, int index, int newPrice) {
         switch (choice) {
             case 1:
-                MenuData.chickenAndPlattersItemPrices.set(index, newPrice);
+                MenuData.chickenAndPlattersItemPrices[index] = newPrice;
                 break;
             case 2:
-                MenuData.breakfastItemPrices.set(index, newPrice);
+                MenuData.breakfastItemPrices[index] = newPrice;
                 break;
             case 3:
-                MenuData.burgerItemPrices.set(index, newPrice);
+                MenuData.burgerItemPrices[index] = newPrice;
                 break;
             case 4:
-                MenuData.drinksAndDessertsItemPrices.set(index, newPrice);
+                MenuData.drinksAndDessertsItemPrices[index] = newPrice;
                 break;
             case 5:
-                MenuData.coffeeItemPrices.set(index, newPrice);
+                MenuData.coffeeItemPrices[index] = newPrice;
                 break;
             case 6:
-                MenuData.friesItemPrices.set(index, newPrice);
+                MenuData.friesItemPrices[index] = newPrice;
                 break;
         }
     }

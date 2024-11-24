@@ -3,77 +3,58 @@ package ADMIN;
 import java.util.Scanner;
 
 public class AdminSystem {
-    public static void main(String[] args) {
-        int maxAdmins = 10;
-        AdminManager adminManager = new AdminManager(maxAdmins);
-        AdminMenu adminMenu = new AdminMenu(adminManager);
-        Scanner scanner = new Scanner(System.in);
+    private static final String DEFAULT_ADMIN_USERNAME = "admin";
+    private static final String DEFAULT_ADMIN_PASSWORD = "admin123";
+    private AdminMenu adminMenu = new AdminMenu();  // Initialize here instead of in the constructor
+
+    public void start() {
+        Scanner scanner = new Scanner(System.in);  // Create a new Scanner instance for user input
         int choice;
 
         while (true) {
-            System.out.println("1. Register");
-            System.out.println("2. Login");
-            System.out.println("3. Exit");
-
-            // Handle invalid input for menu selection
-            choice = getValidIntegerInput(scanner);
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.print("Choose an option: ");
+            
+            // Check if the input is an integer before proceeding
+            if(scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Clear the newline left by nextInt()
+            } else {
+                // Handle invalid input by clearing the buffer and asking again
+                scanner.nextLine();  // Clear invalid input
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
 
             switch (choice) {
                 case 1:
-                    // Register user
-                    System.out.print("Enter username: ");
-                    String regUsername = scanner.nextLine();
-                    System.out.print("Enter password: ");
-                    String regPassword = scanner.nextLine();
-                    if (adminManager.register(regUsername, regPassword)) {
-                        System.out.println("Registration successful!");
-                    } else {
-                        System.out.println("Username already exists or registration failed.");
+                    if (login(scanner)) {  // Pass the scanner to the login method
+                        adminMenu.displayMenu(); // Show the admin menu after successful login
                     }
                     break;
-
                 case 2:
-                    // Login user
-                    System.out.print("Enter username: ");
-                    String loginUsername = scanner.nextLine();
-                    System.out.print("Enter password: ");
-                    String loginPassword = scanner.nextLine();
-                    if (adminManager.login(loginUsername, loginPassword)) {
-                        System.out.println("Login successful!");
-                        adminMenu.displayMenu();
-                    } else {
-                        System.out.println("Invalid username or password.");
-                    }
-                    break;
-
-                case 3:
-                    // Exit
-                    System.out.println("Exiting...\nProgram Closed.");
-                    scanner.close();
+                    System.out.println("Exiting...");
                     return;
-
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
-    // Method to ensure valid integer input
-    private static int getValidIntegerInput(Scanner scanner) {
-        int input = -1; // Default invalid value
-        boolean valid = false;
-        
-        while (!valid) {
-            try {
-                System.out.print("Choose an option: ");
-                input = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
-                valid = true; // Input is valid
-            } catch (java.util.InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                scanner.nextLine(); // Clear the invalid input
-            }
+    // Handles admin login logic
+    private boolean login(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String loginUsername = scanner.nextLine();  // Read username
+        System.out.print("Enter password: ");
+        String loginPassword = scanner.nextLine();  // Read password
+
+        if (loginUsername.equals(DEFAULT_ADMIN_USERNAME) && loginPassword.equals(DEFAULT_ADMIN_PASSWORD)) {
+            System.out.println("Login successful!");
+            return true;
+        } else {
+            System.out.println("Invalid username or password.");
+            return false;
         }
-        return input;
     }
 }
